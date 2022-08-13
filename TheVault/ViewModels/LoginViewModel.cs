@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using TheVault.Commands;
 using TheVault.Data;
+using TheVault.Interfaces;
 using TheVault.Services;
 using TheVault.Utilities;
 using TheVault.Views;
@@ -43,6 +44,11 @@ namespace TheVault.ViewModels
 
         private void Login()
         {
+            var buffer = Encoding.UTF8.GetBytes(Password);
+
+            var passwordHelper = new PasswordHasherHelper();
+            var salt = passwordHelper.GenerateSalt();
+            var hash = passwordHelper.CreateHash(buffer, salt);
             using var db = _dbFactory.CreateDbContext();
             var user = db.Users.Where(x => x.Username!.Equals(Username)).FirstOrDefault();
             if (user != null)
