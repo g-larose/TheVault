@@ -35,33 +35,53 @@ namespace TheVault.ViewModels
             get => _password;
             set => OnPropertyChanged(ref _password, value);
         }
+
+        private bool _isCreateAcctEnabled;
+        public bool IsCreateAcctEnabled
+        {
+            get => _isCreateAcctEnabled;
+            set => OnPropertyChanged(ref _isCreateAcctEnabled, value);
+        }
         public LoginViewModel(AppDbContextFactory dbFactory, LoginView view)
         {
             _dbFactory = dbFactory;
             _view = view;
             CancelCommand = new RelayCommand(CloseLoginWindow);
             LoginCommand = new RelayCommand(Login);
+            IsCreateAcctEnabled = false;
             CreateAccountCommand = new RelayCommand<CreateAccountView>(CreateAccount);
         }
 
         private void CreateAccount(CreateAccountView view)
         {
            view = new CreateAccountView();
+           _view.Hide();
            view.ShowDialog();
         }
 
         private void Login()
         {
-            var buffer = Encoding.UTF8.GetBytes(Password!);
-
-            var passwordHelper = new PasswordHasherHelper();
-            var salt = passwordHelper.GenerateSalt();
-            var hash = passwordHelper.CreateHash(buffer, salt);
             using var db = _dbFactory.CreateDbContext();
             var user = db.Users.Where(x => x.Username!.Equals(Username)).FirstOrDefault();
-            if (user != null)
+
+            var buffer = Encoding.UTF8.GetBytes(Password!);
+            var passwordHelper = new PasswordHasherHelper();
+            var salt = Encoding.UTF8.GetBytes(user!.Salt!);
+            var hash = passwordHelper.CreateHash(buffer, salt);
+           
+            if (user == null)
             {
-                if (user!.IsLoggedIn) return;
+                IsCreateAcctEnabled = true;
+                //TODO: show system message telling the user that they don't have an acct, and to create a new acct!
+            }
+            else
+            {
+                var savedHash = user.PasswordHash;
+                if (hash.Equals(savedHash))
+                {
+                    IsCreateAcctEnabled = false;
+                    _view.Close();
+                }
             }
             
            

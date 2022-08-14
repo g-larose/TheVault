@@ -4,12 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TheVault.Interfaces;
+using TheVault.Models;
 
 namespace TheVault.Services
 {
-    public class MessageService
+    public class MessageService: IMessageService, IDisposable
     {
-        public Window? Window { get; set; }
-        public string? Message { get; set; }
+        public SystemMessage? SystemMessage { get; set; }
+
+        public void Dispose()
+        {
+            this.Dispose();
+        }
+
+        public async Task<SystemMessage>? SendSystemMessageAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
