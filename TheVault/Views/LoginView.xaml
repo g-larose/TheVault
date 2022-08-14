@@ -111,7 +111,7 @@
                             Command="{Binding CancelCommand}"
                             Content="CREATE ACCT"
                             Foreground="{StaticResource PrimaryDarkBrush100}"
-                            IsEnabled="{Binding IsAcctEnabled}" />
+                            IsEnabled="{Binding IsCreateAcctEnabled}" />
                         <Button
                             Width="100"
                             Margin="10,10,10,2"

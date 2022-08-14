@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using TheVault.Commands;
 using TheVault.Data;
 using TheVault.Interfaces;
+using TheVault.Models;
 using TheVault.Services;
 using TheVault.Utilities;
 using TheVault.Views;
@@ -66,17 +68,26 @@ namespace TheVault.ViewModels
 
             var buffer = Encoding.UTF8.GetBytes(Password!);
             var passwordHelper = new PasswordHasherHelper();
-            var salt = Encoding.UTF8.GetBytes(user!.Salt!);
-            var hash = passwordHelper.CreateHash(buffer, salt);
            
             if (user == null)
             {
                 IsCreateAcctEnabled = true;
+                var sysMessage = new SystemMessage()
+                {
+                    Message = "User does not Exist",
+                    IconImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "info.png"),
+                    Type = SystemMessageType.INFORMATION,
+                    IsDialog = true
+                };
+                var mesView = new MessageView(sysMessage);
+                mesView.ShowDialog();
                 //TODO: show system message telling the user that they don't have an acct, and to create a new acct!
             }
             else
             {
                 var savedHash = user.PasswordHash;
+                var salt = Encoding.UTF8.GetBytes(user!.Salt!);
+                var hash = passwordHelper.CreateHash(buffer, salt);
                 if (hash.Equals(savedHash))
                 {
                     IsCreateAcctEnabled = false;

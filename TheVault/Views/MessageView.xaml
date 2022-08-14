@@ -30,7 +30,7 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left"
                         Width="350">
-                <Image Source="/Assets/warning.png"
+                <Image Source="{Binding SystemMessage.IconImagePath, FallbackValue=DefaultIcon}"
                        Width="64"
                        Height="64"
                        HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
                                           Opacity=".4"/>
                     </Image.Effect>
                 </Image>
-                <TextBlock Text="This is the message"
+                <TextBlock Text="{Binding SystemMessage.Message}"
                            Margin="20 20"
                            Height="30"
                            Width="260"

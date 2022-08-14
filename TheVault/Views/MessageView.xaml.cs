@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TheVault.Models;
+using TheVault.ViewModels;
 
 namespace TheVault.Views
 {
@@ -19,9 +21,12 @@ namespace TheVault.Views
     /// </summary>
     public partial class MessageView : Window
     {
-        public MessageView()
+        private readonly SystemMessage _sysMessage;
+        public MessageView(SystemMessage sysMessage)
         {
             InitializeComponent();
+            _sysMessage = sysMessage;
+            DataContext = new MessageViewModel(sysMessage);
         }
     }
 }

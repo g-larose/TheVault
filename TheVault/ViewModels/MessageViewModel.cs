@@ -10,6 +10,13 @@ namespace TheVault.ViewModels
 {
     public class MessageViewModel : ViewModelBase
     {
+		private SystemMessage _systemMessage;
+		public SystemMessage SystemMessage
+		{
+			get => _systemMessage;
+			set => OnPropertyChanged(ref _systemMessage, value);
+		}
+
 		private string? _message;
 		public string? Message
 		{
@@ -17,9 +24,16 @@ namespace TheVault.ViewModels
 			set => OnPropertyChanged(ref _message, value);
 		}
 
+		private string? _defaultIcon;
+		public string? DefaultIcon
+		{
+			get => _defaultIcon;
+			set => OnPropertyChanged(ref _defaultIcon, value);
+		}
+
 		public MessageViewModel(SystemMessage systemMessage)
 		{
-
+			_systemMessage = systemMessage;
 		}
 	}
 }
