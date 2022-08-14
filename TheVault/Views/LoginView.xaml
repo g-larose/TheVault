@@ -65,7 +65,7 @@
                             Grid.Row="1"
                             Orientation="Vertical"
                             HorizontalAlignment="Center"
-                            Height="140">
+                            Height="164">
                     <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Width="240"
                              Height="40"
@@ -89,17 +89,25 @@
                                 HorizontalAlignment="Center">
                         <Button Width="100"
                                 Content="LOGIN"
-                                Margin="10"
+                                Margin="10 10 0 2"
                                 Background="{StaticResource PrimaryLightBlueBrush}"
                                 BorderBrush="{x:Null}"
                                 Command="{Binding LoginCommand}"/>
                          <Button Width="100"
                                 Content="CANCEL"
-                                Margin="10 0"
+                                Margin="10 10 10 2"
                                 Background="{StaticResource PrimaryLightBlueBrush}"
                                 BorderBrush="{x:Null}"
                                 Command="{Binding CancelCommand}"/>
                     </StackPanel>
+                    <Button Content="Create Account"
+                            BorderBrush="{x:Null}"
+                            Background="{x:Null}"
+                            Foreground="blue"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="28"
+                            Command="{Binding CreateAccountCommand}"/>
                 </StackPanel>
                 <!--#region MAIN CONTENT-->
                 

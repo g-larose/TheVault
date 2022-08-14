@@ -102,8 +102,41 @@
                             Width="60"
                             Background="Transparent"
                             BorderBrush="{x:Null}"
+                            Grid.Row="0"
+                            Command="{Binding NavigateSettingsCommand}">
+                        
+                        <Button.Content>
+                            <md:PackIcon Kind="Home"
+                                         Width="30"
+                                         Height="30"
+                                         HorizontalAlignment="Center"
+                                         Foreground="{StaticResource PrimaryDarkBrush400}"/>
+                        </Button.Content>
+                        
+                    </Button>
+                    <Button Height="50"
+                            Width="60"
+                            Background="Transparent"
+                            BorderBrush="{x:Null}"
+                            Grid.Row="1"
+                            Command="{Binding NavigateSettingsCommand}">
+                        
+                        <Button.Content>
+                            <md:PackIcon Kind="KeyAdd"
+                                         Width="30"
+                                         Height="30"
+                                         HorizontalAlignment="Center"
+                                         Foreground="{StaticResource PrimaryDarkBrush400}"/>
+                        </Button.Content>
+                        
+                    </Button>
+                    <Button Height="50"
+                            Width="60"
+                            Background="Transparent"
+                            BorderBrush="{x:Null}"
                             Grid.Row="6"
                             Command="{Binding NavigateSettingsCommand}">
+                        
                         <Button.Content>
                             <md:PackIcon Kind="Gear"
                                          Width="30"

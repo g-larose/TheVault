@@ -20,6 +20,7 @@ namespace TheVault.ViewModels
         public LoginView _view;
         public ICommand? CancelCommand { get; }
         public ICommand? LoginCommand { get; }
+        public ICommand? CreateAccountCommand { get; }
 
         private string? _username;
         public string? Username
@@ -40,11 +41,18 @@ namespace TheVault.ViewModels
             _view = view;
             CancelCommand = new RelayCommand(CloseLoginWindow);
             LoginCommand = new RelayCommand(Login);
+            CreateAccountCommand = new RelayCommand<CreateAccountView>(CreateAccount);
+        }
+
+        private void CreateAccount(CreateAccountView view)
+        {
+           view = new CreateAccountView();
+           view.ShowDialog();
         }
 
         private void Login()
         {
-            var buffer = Encoding.UTF8.GetBytes(Password);
+            var buffer = Encoding.UTF8.GetBytes(Password!);
 
             var passwordHelper = new PasswordHasherHelper();
             var salt = passwordHelper.GenerateSalt();
