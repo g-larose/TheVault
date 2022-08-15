@@ -108,7 +108,7 @@
                             Margin="10,10,0,2"
                             Background="{StaticResource PrimaryLightBlueBrush}"
                             BorderBrush="{x:Null}"
-                            Command="{Binding CancelCommand}"
+                            Command="{Binding CreateAccountCommand}"
                             Content="CREATE ACCT"
                             Foreground="{StaticResource PrimaryDarkBrush100}"
                             IsEnabled="{Binding IsCreateAcctEnabled}" />

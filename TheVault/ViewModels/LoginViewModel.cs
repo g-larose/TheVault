@@ -19,7 +19,8 @@ namespace TheVault.ViewModels
     internal class LoginViewModel : ViewModelBase
     {
         private readonly AppDbContextFactory _dbFactory;
-        public LoginView _view;
+        private UserHelper _userHelper;
+        private LoginView _view;
         public ICommand? CancelCommand { get; }
         public ICommand? LoginCommand { get; }
         public ICommand? CreateAccountCommand { get; }
@@ -50,45 +51,38 @@ namespace TheVault.ViewModels
             _view = view;
             CancelCommand = new RelayCommand(CloseLoginWindow);
             LoginCommand = new RelayCommand(Login);
+            _userHelper = new UserHelper(_dbFactory);
             IsCreateAcctEnabled = false;
-            CreateAccountCommand = new RelayCommand<CreateAccountView>(CreateAccount);
+            CreateAccountCommand = new RelayCommand(CreateAccount);
         }
 
-        private void CreateAccount(CreateAccountView view)
+        private void CreateAccount()
         {
-           view = new CreateAccountView();
-           _view.Hide();
-           view.ShowDialog();
+            //TODO: handle creating user account.
         }
 
+        #region LOGIN USER
         private void Login()
         {
-            using var db = _dbFactory.CreateDbContext();
-            var user = db.Users.Where(x => x.Username!.Equals(Username)).FirstOrDefault();
+            var user = _userHelper.GetUser(Username);
 
-            var buffer = Encoding.UTF8.GetBytes(Password!);
-            var passwordHelper = new PasswordHasherHelper();
-           
             if (user == null)
             {
                 IsCreateAcctEnabled = true;
                 var sysMessage = new SystemMessage()
                 {
                     Message = "User does not Exist",
-                    IconImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "info.png"),
+                    IconImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "error.png"),
                     Type = SystemMessageType.INFORMATION,
                     IsDialog = true
                 };
                 var mesView = new MessageView(sysMessage);
-                mesView.ShowDialog();
-                //TODO: show system message telling the user that they don't have an acct, and to create a new acct!
+                mesView.ShowDialog();  
             }
             else
             {
-                var savedHash = user.PasswordHash;
-                var salt = Encoding.UTF8.GetBytes(user!.Salt!);
-                var hash = passwordHelper.CreateHash(buffer, salt);
-                if (hash.Equals(savedHash))
+                
+                if (_userHelper.LoginUser(Username!, Password!))
                 {
                     IsCreateAcctEnabled = false;
                     _view.Close();
@@ -97,6 +91,7 @@ namespace TheVault.ViewModels
             
            
         }
+        #endregion
 
         private void CloseLoginWindow()
         {

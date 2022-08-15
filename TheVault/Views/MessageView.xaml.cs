@@ -26,7 +26,7 @@ namespace TheVault.Views
         {
             InitializeComponent();
             _sysMessage = sysMessage;
-            DataContext = new MessageViewModel(sysMessage);
+            DataContext = new MessageViewModel(sysMessage, this);
         }
     }
 }

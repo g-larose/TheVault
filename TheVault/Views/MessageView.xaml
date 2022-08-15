@@ -28,13 +28,12 @@
                     Margin="20 2">
             <StackPanel Orientation="Horizontal"
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Width="350">
+                        HorizontalAlignment="Center"
+                        Width="Auto"
+                        Margin="10">
                 <Image Source="{Binding SystemMessage.IconImagePath, FallbackValue=DefaultIcon}"
                        Width="64"
-                       Height="64"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center">
+                       Height="64">
                     <Image.Effect>
                         <DropShadowEffect BlurRadius="4"
                                           ShadowDepth="4"
@@ -43,22 +42,22 @@
                                           Opacity=".4"/>
                     </Image.Effect>
                 </Image>
-                <TextBlock Text="{Binding SystemMessage.Message}"
+                <TextBlock Text="{Binding SystemMessage.Message, FallbackValue=System Message}"
                            Margin="20 20"
                            Height="30"
-                           Width="260"
+                           Width="Auto"
                            Foreground="{StaticResource PrimaryOrangeToSecondaryOrange}"
+                           FontSize="18"
                            HorizontalAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
-                        Width="180"
                         Height="38"
                         Margin="0 10"
                         HorizontalAlignment="Center">
                 <Button Content="OK"
-                        Margin="10 0"/>
-                <Button Content="CANCEL"
-                        Width="100"/>
+                        Margin="10 0"
+                        Command="{Binding OKCommand}"/>
+
             </StackPanel>
         </StackPanel>
         
