@@ -11,6 +11,6 @@ namespace TheVault.Interfaces
         public string CreateHash(byte[] password, byte[] salt);
         public bool VerifyHash(byte[] password, byte[] salt, byte[] hash);
         public string GenerateRandomPassword(int length);
-        public byte[] GenerateSalt();
+        public string GenerateSalt();
     }
 }

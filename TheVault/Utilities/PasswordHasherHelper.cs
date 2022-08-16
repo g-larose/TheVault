@@ -26,12 +26,10 @@ namespace TheVault.Utilities
 
         public string CreateHash(byte[] password, byte[] salt)
         {
-            using var argon2 = new Argon2id(password);
-            argon2.Salt = salt;
-            argon2.DegreeOfParallelism = 8;
-            argon2.Iterations = 4;
-            argon2.MemorySize = 1024 * 128;
-            var hash = Encoding.ASCII.GetString(argon2.GetBytes(32));
+            var saltedPass = Combine(password, salt);
+            using var md5 = MD5.Create();
+            var tempHash = md5.ComputeHash(saltedPass);
+            var hash = ByteArrayToString(tempHash);
             return hash;
         }
 
@@ -39,12 +37,30 @@ namespace TheVault.Utilities
             CreateHash(password, salt).Equals(hash);
         
 
-        public byte[] GenerateSalt()
+        public string GenerateSalt()
         {
-            var buffer = new byte[32];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(buffer);
-            return buffer;
+            string? buffer = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+            var saltBuilder = new StringBuilder();
+            var rnd = new Random();
+            for (int i = 0; i < 28; i++)
+            {
+                var index = rnd.Next(1, buffer.Length);
+                saltBuilder.Append(buffer[index]);
+            }
+            return saltBuilder.ToString();
+        }
+
+        private string ByteArrayToString(byte[] args)
+        {
+            return Convert.ToBase64String(args);
+        }
+
+        private byte[] Combine(byte[] ar1, byte[] ar2)
+        {
+            byte[] ret = new byte[ar1.Length + ar2.Length];
+            Buffer.BlockCopy(ar1, 0, ret, 0, ar1.Length);
+            Buffer.BlockCopy(ar2, 0, ret, ar1.Length, ar2.Length);
+            return ret;
         }
     }
 }

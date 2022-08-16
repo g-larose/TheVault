@@ -58,7 +58,22 @@ namespace TheVault.ViewModels
 
         private void CreateAccount()
         {
-            //TODO: handle creating user account.
+            var db = _dbFactory.CreateDbContext();
+            var passwordHasherHelper = new PasswordHasherHelper();
+            var salt = passwordHasherHelper.GenerateSalt();
+            var passwordBytes = Encoding.ASCII.GetBytes(Password!);
+            var saltBytes = Encoding.ASCII.GetBytes(salt);
+            var user = new AppUser()
+            {
+                Username = Username,
+                PasswordHash = passwordHasherHelper.CreateHash(passwordBytes, saltBytes),
+                Salt = salt,
+                Created = DateTimeOffset.UtcNow,
+                IsAdmin = true,
+                IsLoggedIn = true,
+            };
+            db.Users.Add(user);
+            db.SaveChanges();
         }
 
         #region LOGIN USER
