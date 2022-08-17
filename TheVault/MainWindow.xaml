@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheVault"
+        xmlns:vm="clr-namespace:TheVault.ViewModels"
+        xmlns:uc="clr-namespace:TheVault.UserControls"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -11,13 +13,13 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
-        Height="450" Width="600">
+        Height="450" Width="700">
     <Grid>
 
         <Border CornerRadius="14"
                 Background="{StaticResource Primary100ToSecondary200GradientBrush}"
                 Height="440"
-                Width="590"
+                Width="690"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top">
             <Border.Effect>
@@ -119,7 +121,7 @@
                             Background="Transparent"
                             BorderBrush="{x:Null}"
                             Grid.Row="1"
-                            Command="{Binding NavigateSettingsCommand}">
+                            Command="{Binding NavigatePasswordListCommand}">
                         
                         <Button.Content>
                             <md:PackIcon Kind="KeyAdd"
@@ -154,9 +156,12 @@
                                 Grid.Column="2"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Margin="10">
+                                Margin="10"
+                                Content="{Binding Path=CurrentViewModel}">
                     <ContentControl.Resources>
-                        
+                        <DataTemplate DataType="{x:Type vm:PasswordListViewModel}">
+                            <uc:PasswordListView/>
+                        </DataTemplate>
                     </ContentControl.Resources>
                     
                 </ContentControl>

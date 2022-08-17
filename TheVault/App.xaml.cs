@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System.Windows;
 using TheVault.Data;
 using TheVault.Interfaces;
+using TheVault.Navigation;
 using TheVault.Services;
 using TheVault.ViewModels;
 
@@ -16,10 +17,11 @@ namespace TheVault
         {
             _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
+                services.AddScoped<AppDbContextFactory>();
                 services.AddSingleton<AppViewModel>();
-                services.AddTransient<AppDbContextFactory>();
+                services.AddSingleton<INavigator, Navigator>();
                 services.AddSingleton<IDataService, DataService>();
-                services.AddSingleton<MainWindow>(s => new TheVault.MainWindow()
+                services.AddSingleton<MainWindow>(s => new MainWindow()
                 {
                     DataContext = s.GetRequiredService<AppViewModel>()
                 });
