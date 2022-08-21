@@ -83,7 +83,7 @@
                         Background="{StaticResource PrimaryDarkBrush400}"
                         Foreground="{StaticResource PrimaryLightBlueBrush}"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <PasswordBox
                         x:Name="passwordBox"
                         Width="340"

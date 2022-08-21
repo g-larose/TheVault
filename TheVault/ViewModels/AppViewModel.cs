@@ -22,6 +22,7 @@ namespace TheVault.ViewModels
         public ICommand? CloseAppCommand { get; }
         public ICommand? NavigateSettingsCommand { get; }
         public ICommand? NavigatePasswordListCommand { get; }
+        public ICommand? NavigateNewPasswordViewCommand { get; }
 
         private bool _isLoggedIn;
         public bool IsLoggedIn
@@ -45,6 +46,7 @@ namespace TheVault.ViewModels
             CloseAppCommand = new RelayCommand(CloseApp);
             NavigateSettingsCommand = new RelayCommand<LoginView>(NavigateSettings);
             NavigatePasswordListCommand = new NavigateCommand<PasswordListViewModel>(_navigator, () => new PasswordListViewModel());
+            NavigateNewPasswordViewCommand = new NavigateCommand<AddNewPasswordViewModel>(_navigator, () => new AddNewPasswordViewModel());
             
         }
 

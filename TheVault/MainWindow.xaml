@@ -105,7 +105,7 @@
                             Background="Transparent"
                             BorderBrush="{x:Null}"
                             Grid.Row="0"
-                            Command="{Binding NavigateSettingsCommand}">
+                            Command="{Binding NavigateHomeCommand}">
                         
                         <Button.Content>
                             <md:PackIcon Kind="Home"
@@ -121,7 +121,7 @@
                             Background="Transparent"
                             BorderBrush="{x:Null}"
                             Grid.Row="1"
-                            Command="{Binding NavigatePasswordListCommand}">
+                            Command="{Binding NavigateNewPasswordViewCommand}">
                         
                         <Button.Content>
                             <md:PackIcon Kind="KeyAdd"
@@ -161,6 +161,9 @@
                     <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type vm:PasswordListViewModel}">
                             <uc:PasswordListView/>
+                        </DataTemplate>
+                           <DataTemplate DataType="{x:Type vm:AddNewPasswordViewModel}">
+                            <uc:AddNewPasswordView/>
                         </DataTemplate>
                     </ContentControl.Resources>
                     

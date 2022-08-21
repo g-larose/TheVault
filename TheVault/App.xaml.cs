@@ -5,6 +5,7 @@ using TheVault.Data;
 using TheVault.Interfaces;
 using TheVault.Navigation;
 using TheVault.Services;
+using TheVault.Utilities;
 using TheVault.ViewModels;
 
 namespace TheVault
@@ -21,6 +22,7 @@ namespace TheVault
                 services.AddSingleton<AppViewModel>();
                 services.AddSingleton<INavigator, Navigator>();
                 services.AddSingleton<IDataService, DataService>();
+                services.AddScoped<IPasswordService, PasswordHasherHelper>();
                 services.AddSingleton<MainWindow>(s => new MainWindow()
                 {
                     DataContext = s.GetRequiredService<AppViewModel>()
